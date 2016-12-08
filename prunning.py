@@ -103,7 +103,7 @@ ALGORITHM IMPLEMENTATION
 
 '''
 FUNCTION
-	bruteForce
+	bruteForceWithPrunning
 DESCRIPTION:
 	This is a recursive function.
 	Runs the brute force of all permutations starting in a already defined partial permutation.
@@ -136,10 +136,10 @@ GLOBAL VARIABLES USED:
 		min_path_so_far
 		num_leaves_visited_so_far
 '''
-def bruteForce( list_nodes_visited,
-				list_nodes_to_be_visited,
-				cost_so_far,
-				lowerBoundFunction):
+def bruteForceWithPrunning( list_nodes_visited,
+							list_nodes_to_be_visited,
+							cost_so_far,
+							lowerBoundFunction):
 
 	# Global variables potentially writen in this function.
 	global min_cost_so_far
@@ -256,10 +256,10 @@ def bruteForce( list_nodes_visited,
 
 				cost_of_that_child = cost_so_far + EDGE_WEIGHT[current_node][child_node]
 
-				bruteForce(		list_nodes_visited, 
-								list_nodes_to_be_visited, 
-								cost_of_that_child, 
-								lowerBoundFunction)
+				bruteForceWithPrunning(		list_nodes_visited, 
+											list_nodes_to_be_visited, 
+											cost_of_that_child, 
+											lowerBoundFunction)
 
 			# END IF
 
@@ -273,7 +273,7 @@ def bruteForce( list_nodes_visited,
 
 '''
 FUNCTION
-	initBruteForce
+	initBruteForceWithPrunning
 DESCRIPTION:
 	This is the first call of a recursive function.
 	Starts the brute force algorithm with the prunning on the first node (node zero) of the complete graph.
@@ -297,7 +297,7 @@ GLOBAL VARIABLES USED:
 		min_path_so_far
 		num_leaves_visited_so_far
 '''
-def initBruteForce(lowerBoundFunction):
+def initBruteForceWithPrunning(lowerBoundFunction):
 
 	# For the beginning, only node zero, the root, has already been visited
 	list_nodes_visited = [0]
@@ -313,10 +313,10 @@ def initBruteForce(lowerBoundFunction):
 	cost_initial_partial_permutation = 0
 
 	# Starts the recursion
-	bruteForce( 	list_nodes_visited,
-					list_nodes_to_be_visited,
-					cost_initial_partial_permutation,
-					lowerBoundFunction);
+	bruteForceWithPrunning( 	list_nodes_visited,
+								list_nodes_to_be_visited,
+								cost_initial_partial_permutation,
+								lowerBoundFunction);
 
 '''
 =============================================================================
@@ -325,7 +325,7 @@ MAIN FUNCTION
 '''
 
 def main():
-	initBruteForce(zeroLowerBound)
+	initBruteForceWithPrunning(zeroLowerBound)
 
 	print("--------")
 	print(min_cost_so_far)
