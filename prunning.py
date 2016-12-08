@@ -1,5 +1,8 @@
 import math
 
+import numpy
+import skimage.io
+import skimage.draw
 '''
 =============================================================================
 CONSTANTS / INPUT OF THE PROBLEM
@@ -12,6 +15,7 @@ DESCRIPTION:
 	The path to the output file of the algorithm
 '''
 PATH_OUTPUT_FILE = "out.txt"
+CITIES = []
 
 '''
 CONSTANT
@@ -349,6 +353,27 @@ def bruteForceWithPrunning( list_nodes_visited,
 			file_out.close()
 
 
+			min_x = min(CITIES, key = lambda t: t[1])[1]
+			min_y = min(CITIES, key = lambda t: t[2])[2]
+			max_x = max(CITIES, key = lambda t: t[1])[1]
+			max_y = max(CITIES, key = lambda t: t[2])[2]
+			max_d = max(max_x - min_x, max_y - min_y)
+			image = numpy.zeros( (1200, 1200) )
+			for city in CITIES:
+				rr, cc = skimage.draw.circle( 100+int((city[1] - min_x)*1000/max_d), 100+int((city[2] - min_y)*1000/max_d), 5)
+				image[rr, cc] = 1
+			for  i in xrange(1,NUM_VERTICES):
+				city_end = CITIES[list_nodes_visited[i]]
+				city_start = CITIES[list_nodes_visited[i-1]]
+				rr, cc = skimage.draw.line(100+int((city_start[1] - min_x)*1000/max_d), 100+int((city_start[2] - min_y)*1000/max_d), 100+int((city_end[1] - min_x)*1000/max_d), 100+int((city_end[2] - min_y)*1000/max_d))
+				image[rr, cc] = 1
+			city_end = CITIES[list_nodes_visited[NUM_VERTICES-1]]
+			city_start = CITIES[list_nodes_visited[0]]
+			rr, cc = skimage.draw.line(100+int((city_start[1] - min_x)*1000/max_d), 100+int((city_start[2] - min_y)*1000/max_d), 100+int((city_end[1] - min_x)*1000/max_d), 100+int((city_end[2] - min_y)*1000/max_d))
+			image[rr, cc] = 1
+			skimage.io.imsave(PATH_OUTPUT_FILE+str(min_cost_so_far)+".png",image)
+
+
 		# END IF
 		return
 	#END IF
@@ -473,7 +498,7 @@ GLOBAL VARIABLES USED:
 		min_path_so_far
 		num_leaves_visited_so_far
 '''
-def initBruteForceWithPrunning(costMatrix, lowerBoundFunction, output_file):
+def initBruteForceWithPrunning(cities, costMatrix, lowerBoundFunction, output_file):
 
 	# Global variables potentially writen in this function.
 	global min_cost_so_far
@@ -482,7 +507,9 @@ def initBruteForceWithPrunning(costMatrix, lowerBoundFunction, output_file):
 	global EDGE_WEIGHT
 	global NUM_VERTICES
 	global PATH_OUTPUT_FILE
+	global CITIES
 
+	CITIES = cities
 	PATH_OUTPUT_FILE = output_file
 	EDGE_WEIGHT = costMatrix
 	NUM_VERTICES = len(costMatrix)

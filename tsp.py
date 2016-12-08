@@ -58,11 +58,11 @@ def main():
     algorithm = int(algorithm)
 
     if algorithm == 1:
-        prunning.initBruteForceWithPrunning(costMatrix, prunning.zeroLowerBound,"./out/"+filename+".txt")
+        prunning.initBruteForceWithPrunning(items, costMatrix, prunning.zeroLowerBound,"./out/"+filename+".txt")
     elif algorithm == 2:
-        prunning.initBruteForceWithPrunning(costMatrix, prunning.sumMinEdgesBound,"./out/"+filename+".txt")
+        prunning.initBruteForceWithPrunning(items, costMatrix, prunning.sumMinEdgesBound,"./out/"+filename+".txt")
     elif algorithm == 3:
-        prunning.initBruteForceWithPrunning(costMatrix, prunning.qRouteLowerBound,"./out/"+filename+".txt")
+        prunning.initBruteForceWithPrunning(items, costMatrix, prunning.qRouteLowerBound,"./out/"+filename+".txt")
         
         
     # elif algorithm == 3:
