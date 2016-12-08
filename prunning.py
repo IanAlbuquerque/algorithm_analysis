@@ -5,6 +5,13 @@ import math
 CONSTANTS / INPUT OF THE PROBLEM
 =============================================================================
 '''
+'''
+CONSTANT
+	PATH_OUTPUT_FILE
+DESCRIPTION:
+	The path to the output file of the algorithm
+'''
+PATH_OUTPUT_FILE = "out.txt"
 
 '''
 CONSTANT
@@ -276,6 +283,8 @@ GLOBAL VARIABLES USED:
 		min_path_so_far
 		num_leaves_visited_so_far
 '''
+MAX_COUNT = 20000
+COUNT = 0
 def bruteForceWithPrunning( list_nodes_visited,
 							list_nodes_to_be_visited,
 							cost_so_far,
@@ -285,9 +294,16 @@ def bruteForceWithPrunning( list_nodes_visited,
 	global min_cost_so_far
 	global min_path_so_far
 	global num_leaves_visited_so_far
+	global COUNT
 
 	# The current node being "investigated" is the last node that has been visited
 	current_node = list_nodes_visited[-1]
+
+	COUNT = COUNT + 1
+	if COUNT > MAX_COUNT:
+		print list_nodes_visited
+		print "Upper Bound = " + str(min_cost_so_far)
+		COUNT = 0
 
 	# -----------------------
 	# CASE 1) IS A LEAF (BASE CASE)
@@ -303,14 +319,19 @@ def bruteForceWithPrunning( list_nodes_visited,
 
 		num_leaves_visited_so_far = num_leaves_visited_so_far + 1
 
-		print("FOLHA: %s", list_nodes_visited)
-
 		# If the total cost of the current permutation is better than the one we had previously,
 		# update the global variables min_cost_so_far and min_path_so_far
 		if(cost_total < min_cost_so_far):
 
 			min_cost_so_far = cost_total
 			min_path_so_far = list(list_nodes_visited)
+
+			file_out = open(PATH_OUTPUT_FILE,"a")
+			file_out.write("-----------\n")
+			file_out.write("Permutation = " + str(min_path_so_far) + "\n")
+			file_out.write("Cost = " + str(min_cost_so_far) + "\n")
+			file_out.close()
+
 
 		# END IF
 		return
@@ -365,7 +386,7 @@ def bruteForceWithPrunning( list_nodes_visited,
 
 		# Sort the list of tuples by the second entry, that is the lower bound.
 		# Also, make sure it is reversed, so we have higher lower bounds first.
-		list_tuples_ordered = list(reversed(sorted(	list_tuples_unordered, key=lambda tupleChildLowerBound: tupleChildLowerBound[1])))
+		list_tuples_ordered = list((sorted(	list_tuples_unordered, key=lambda tupleChildLowerBound: tupleChildLowerBound[1])))
 
 		# -----------------------
 		# STEP 2: ITERATE THROUGH SORTED CHILDREN, POSSIBLY PRUNNING SUB-TREES
@@ -389,7 +410,7 @@ def bruteForceWithPrunning( list_nodes_visited,
 			# of the best permutation found so far.
 			# That is, if the lower bound of that child is greater than the upper bound that we have,
 			# there is no point in continuing to descend in that branch.
-			if(lower_bound_of_that_child <= min_cost_so_far):
+			if(lower_bound_of_that_child < min_cost_so_far):
 
 				cost_of_that_child = cost_so_far + EDGE_WEIGHT[current_node][child_node]
 
@@ -436,7 +457,7 @@ GLOBAL VARIABLES USED:
 		min_path_so_far
 		num_leaves_visited_so_far
 '''
-def initBruteForceWithPrunning(costMatrix, lowerBoundFunction):
+def initBruteForceWithPrunning(costMatrix, lowerBoundFunction, output_file):
 
 	# Global variables potentially writen in this function.
 	global min_cost_so_far
@@ -444,9 +465,15 @@ def initBruteForceWithPrunning(costMatrix, lowerBoundFunction):
 	global num_leaves_visited_so_far
 	global EDGE_WEIGHT
 	global NUM_VERTICES
+	global PATH_OUTPUT_FILE
 
+	PATH_OUTPUT_FILE = output_file
 	EDGE_WEIGHT = costMatrix
 	NUM_VERTICES = len(costMatrix)
+
+	file_out = open(PATH_OUTPUT_FILE,"w")
+	file_out.write("BEST PERMUTATIONS FOUND SO FAR\n")
+	file_out.close()
 
 	# For the beginning, only node zero, the root, has already been visited
 	list_nodes_visited = [0]
@@ -472,6 +499,7 @@ def initBruteForceWithPrunning(costMatrix, lowerBoundFunction):
 								cost_initial_partial_permutation,
 								lowerBoundFunction);
 
+
 def reportNumberPermutations():
 	return math.factorial(NUM_VERTICES-1)
 
@@ -485,6 +513,7 @@ def reportNumberOfLeavesVisisted():
 	return num_leaves_visited_so_far
 
 def reportPruningPercentage():
+	number_of_possible_permutations = math.factorial(NUM_VERTICES-1)
 	return (1.0 - float(num_leaves_visited_so_far)/float(number_of_possible_permutations))*100.0
 '''
 =============================================================================
