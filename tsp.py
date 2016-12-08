@@ -1,6 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2.7
+from __future__ import print_function
 import sys
 import math
+import prunning
 
 def readFile(filepath):
     f = open(filepath)
@@ -14,7 +16,7 @@ def readFile(filepath):
 
     items = []
 
-    for i in range(nItems):
+    for i in xrange(nItems):
         city, x, y = f.readline().split()
         items.append([int(city), float(x), float(y)])
 
@@ -23,9 +25,9 @@ def readFile(filepath):
 def constructCostMatrix(items):
     costMatrix = []
 
-    for i in range(len(items)):
+    for i in xrange(len(items)):
         costMatrix.append([0]*len(items))
-        for j in range(i+1):
+        for j in xrange(i+1):
             distance = calculateDistance(items[i], items[j])
             costMatrix[i][j] = distance
             costMatrix[j][i] = distance
@@ -55,11 +57,19 @@ def main():
 
     algorithm = int(algorithm)
 
-    # if algorithm == 1:
+    if algorithm == 1:
+        prunning.initBruteForceWithPrunning(costMatrix, prunning.zeroLowerBound)
+    elif algorithm == 2:
+        prunning.initBruteForceWithPrunning(costMatrix, prunning.sumMinEdgesBound)
         
-    # elif algorithm == 2:
         
     # elif algorithm == 3:
+
+    prunning.reportNumberPermutations()
+    prunning.reportLowestCost()
+    prunning.reportLowestCostPath()
+    prunning.reportNumberOfLeavesVisisted()
+    prunning.reportPruningPercentage()
         
 
 if __name__ == "__main__":
