@@ -139,6 +139,26 @@ def sumMinEdgesBound(list_nodes_visited, list_nodes_to_be_visited, cost_so_far):
 
 	return lower_bound
 
+def minimumTreeBound(list_nodes_visited, list_nodes_to_be_visited, cost_so_far):
+
+	return lower_bound
+
+def primMST(list_nodes):
+	if len(list_nodes) == 0:
+		return 0, []
+
+	minimum_spanning_tree = [[list_nodes[-1],list_nodes[-1]]]
+	cheapest_cost_list = []
+
+	for i in xrange(len(list_nodes)-1):
+		cheapest_cost_list.append([list_nodes[i], EDGE_WEIGHT[list_nodes[i]][list_nodes[-1]], list_nodes[-1]])
+
+	while len(cheapest_cost_list) is not 0:
+		x = min(cheapest_cost_list, key=lambda x: x[1])
+		minimum_spanning_tree.append([x[0],x[2]])
+		cheapest_cost_list.remove(x)
+
+
 '''
 =============================================================================
 ALGORITHM IMPLEMENTATION
@@ -206,6 +226,8 @@ def bruteForceWithPrunning( list_nodes_visited,
 		cost_total = cost_so_far + EDGE_WEIGHT[current_node][0]
 
 		num_leaves_visited_so_far = num_leaves_visited_so_far + 1
+
+		print("FOLHA: %s", list_nodes_visited)
 
 		# If the total cost of the current permutation is better than the one we had previously,
 		# update the global variables min_cost_so_far and min_path_so_far
@@ -336,12 +358,17 @@ GLOBAL VARIABLES USED:
 		min_path_so_far
 		num_leaves_visited_so_far
 '''
-def initBruteForceWithPrunning(lowerBoundFunction):
+def initBruteForceWithPrunning(costMatrix, lowerBoundFunction):
 
 	# Global variables potentially writen in this function.
 	global min_cost_so_far
 	global min_path_so_far
 	global num_leaves_visited_so_far
+	global EDGE_WEIGHT
+	global NUM_VERTICES
+
+	EDGE_WEIGHT = costMatrix
+	NUM_VERTICES = len(costMatrix)
 
 	# For the beginning, only node zero, the root, has already been visited
 	list_nodes_visited = [0]
@@ -367,6 +394,20 @@ def initBruteForceWithPrunning(lowerBoundFunction):
 								cost_initial_partial_permutation,
 								lowerBoundFunction);
 
+def reportNumberPermutations():
+	return math.factorial(NUM_VERTICES-1)
+
+def reportLowestCost():
+	return min_cost_so_far
+
+def reportLowestCostPath():
+	return min_path_so_far
+
+def reportNumberOfLeavesVisisted():
+	return num_leaves_visited_so_far
+
+def reportPruningPercentage():
+	return (1.0 - float(num_leaves_visited_so_far)/float(number_of_possible_permutations))*100.0
 '''
 =============================================================================
 MAIN FUNCTION
