@@ -140,7 +140,15 @@ def sumMinEdgesBound(list_nodes_visited, list_nodes_to_be_visited, cost_so_far):
 	return lower_bound
 
 def minimumTreeBound(list_nodes_visited, list_nodes_to_be_visited, cost_so_far):
+	if len(list_nodes_to_be_visited) == 0:
+		return EDGE_WEIGHT[list_nodes_visited[0]][list_nodes_visited[-1]] + cost_so_far
 
+	mst_cost, mst = primMST(list_nodes_to_be_visited)
+
+	min_start = min([EDGE_WEIGHT[list_nodes_visited[0]][x] for x in list_nodes_to_be_visited])
+	min_end = min([EDGE_WEIGHT[list_nodes_visited[-1]][x] for x in list_nodes_to_be_visited])
+
+	lower_bound = cost_so_far + mst_cost + min_start + min_end
 	return lower_bound
 
 def primMST(list_nodes):
@@ -149,15 +157,23 @@ def primMST(list_nodes):
 
 	minimum_spanning_tree = [[list_nodes[-1],list_nodes[-1]]]
 	cheapest_cost_list = []
+	tree_cost = 0
 
 	for i in xrange(len(list_nodes)-1):
 		cheapest_cost_list.append([list_nodes[i], EDGE_WEIGHT[list_nodes[i]][list_nodes[-1]], list_nodes[-1]])
 
 	while len(cheapest_cost_list) is not 0:
 		x = min(cheapest_cost_list, key=lambda x: x[1])
+		tree_cost += x[1]
 		minimum_spanning_tree.append([x[0],x[2]])
 		cheapest_cost_list.remove(x)
 
+		for v in cheapest_cost_list:
+			if EDGE_WEIGHT[x[0]][v[0]] < v[1]:
+				v[1] = EDGE_WEIGHT[x[0]][v[0]]
+				v[2] = x[0]
+
+	return tree_cost, minimum_spanning_tree
 
 '''
 =============================================================================
