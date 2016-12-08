@@ -371,6 +371,7 @@ def bruteForceWithPrunning( list_nodes_visited,
 			city_start = CITIES[list_nodes_visited[0]]
 			rr, cc = skimage.draw.line(100+int((city_start[1] - min_x)*1000/max_d), 100+int((city_start[2] - min_y)*1000/max_d), 100+int((city_end[1] - min_x)*1000/max_d), 100+int((city_end[2] - min_y)*1000/max_d))
 			image[rr, cc] = 1
+			image = 1.0 - image
 			skimage.io.imsave(PATH_OUTPUT_FILE+str(min_cost_so_far)+".png",image)
 
 
