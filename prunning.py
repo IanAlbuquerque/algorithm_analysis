@@ -1,3 +1,5 @@
+import math
+
 '''
 =============================================================================
 CONSTANTS / INPUT OF THE PROBLEM
@@ -96,6 +98,48 @@ def zeroLowerBound(list_nodes_visited, list_nodes_to_be_visited, cost_so_far):
 	return 0
 
 '''
+FUNCTION
+	sumMinEdgesBound
+DESCRIPTION:
+	The cost of the partial permutation so far added to the sum of the lowest k edges
+	of the graph, being k the number of nodes to be visited plus one.
+	This is a lower bound for the total cost of permutations that start with the given
+	partial permutation.
+PARAMETERS:
+	list_nodes_visited
+		The list of visited vertices so far in that partial permutation
+	list_nodes_to_be_visited
+		The list of vertices that have not been visited yet in that partial permutation
+	cost_so_far
+		The cost so far of the edges that connect the vertices in that partial permutation
+RETURNS
+	an integer
+		The cost of the partial permutation so far added to the sum of the lowest k edges
+		of the graph, being k the number of nodes to be visited plus one.
+GLOBAL VARIABLES USED:
+	TO READ:
+		NUM_VERTICES
+		EDGE_WEIGHT
+'''
+def sumMinEdgesBound(list_nodes_visited, list_nodes_to_be_visited, cost_so_far):
+
+	list_of_edge_costs = []
+	for i in xrange(NUM_VERTICES):
+		for j in xrange(i+1, NUM_VERTICES):
+			list_of_edge_costs.append(EDGE_WEIGHT[i][j])
+		# END FOR
+	# END FOR
+
+	list_of_edge_costs_sorted = sorted(list_of_edge_costs)
+
+	lower_bound = cost_so_far
+	for i in xrange(len(list_nodes_to_be_visited) + 1):
+		lower_bound = lower_bound + list_of_edge_costs_sorted[i]
+	# END FOR
+
+	return lower_bound
+
+'''
 =============================================================================
 ALGORITHM IMPLEMENTATION
 =============================================================================
@@ -161,16 +205,11 @@ def bruteForceWithPrunning( list_nodes_visited,
 		# This is necessary to conclude the cycle.
 		cost_total = cost_so_far + EDGE_WEIGHT[current_node][0]
 
-		print("....")
-		print(list_nodes_visited)
-		print(cost_total)
 		num_leaves_visited_so_far = num_leaves_visited_so_far + 1
 
 		# If the total cost of the current permutation is better than the one we had previously,
 		# update the global variables min_cost_so_far and min_path_so_far
-		if(cost_total <= min_cost_so_far):
-
-			print("UPDATED MIN HERE!")
+		if(cost_total < min_cost_so_far):
 
 			min_cost_so_far = cost_total
 			min_path_so_far = list(list_nodes_visited)
@@ -299,6 +338,11 @@ GLOBAL VARIABLES USED:
 '''
 def initBruteForceWithPrunning(lowerBoundFunction):
 
+	# Global variables potentially writen in this function.
+	global min_cost_so_far
+	global min_path_so_far
+	global num_leaves_visited_so_far
+
 	# For the beginning, only node zero, the root, has already been visited
 	list_nodes_visited = [0]
 
@@ -311,6 +355,11 @@ def initBruteForceWithPrunning(lowerBoundFunction):
 
 	# The permutation with only the vertex zero has no cost
 	cost_initial_partial_permutation = 0
+
+	# Initialize Global Variables
+	min_cost_so_far = float('inf')
+	num_leaves_visited_so_far = 0
+	min_path_so_far = []
 
 	# Starts the recursion
 	bruteForceWithPrunning( 	list_nodes_visited,
@@ -325,13 +374,27 @@ MAIN FUNCTION
 '''
 
 def main():
-	initBruteForceWithPrunning(zeroLowerBound)
+
+	number_of_possible_permutations = math.factorial(NUM_VERTICES-1)
 
 	print("--------")
-	print(min_cost_so_far)
-	print(min_path_so_far)
+	print "NUMBER OF POSSIBLE PERMUTATIONS = " + str(number_of_possible_permutations)
 
-	print(num_leaves_visited_so_far)
+	initBruteForceWithPrunning(zeroLowerBound)
+	print("--------")
+	print "LOWER BOUND USED: Zero Lower Bound"
+	print "Lowest Cost = " + str(min_cost_so_far)
+	print "Correspondent Permutation = " + str(min_path_so_far)
+	print "Number of Leaves Visited = " + str(num_leaves_visited_so_far)
+	print "Percentage of Permutations prunned = " + str((1.0 - float(num_leaves_visited_so_far)/float(number_of_possible_permutations))*100.0) + "%"
+
+	initBruteForceWithPrunning(sumMinEdgesBound)
+	print("--------")
+	print "LOWER BOUND USED: Sum Min Edges"
+	print "Lowest Cost = " + str(min_cost_so_far)
+	print "Correspondent Permutation = " + str(min_path_so_far)
+	print "Number of Leaves Visited = " + str(num_leaves_visited_so_far)
+	print "Percentage of Permutations prunned = " + str((1.0 - float(num_leaves_visited_so_far)/float(number_of_possible_permutations))*100.0) + "%"
 
 if __name__ == "__main__":
     main()
