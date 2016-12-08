@@ -18,7 +18,7 @@ NUM_VERTICES = 5
 CONSTANT
 	EDGE_WEIGHT
 DESCRIPTION:
-	A matrix where EDGE_WEIGHT[i][j] is the weight of the edge that connects the i-th vertex to
+	A matrix where EDGE_WEIGHT[i][j] is the weight of the edge that connects the i-th 	vertex to
 	the j-th vertex.
 	Vertices start on 0.
 	The graph should be undirected. Hence, EDGE_WEIGHT[i][j] = EDGE_WEIGHT[j][i] for every i and j.
@@ -136,6 +136,82 @@ def sumMinEdgesBound(list_nodes_visited, list_nodes_to_be_visited, cost_so_far):
 	for i in xrange(len(list_nodes_to_be_visited) + 1):
 		lower_bound = lower_bound + list_of_edge_costs_sorted[i]
 	# END FOR
+
+	return lower_bound
+
+'''
+FUNCTION
+	qRouteLowerBound
+DESCRIPTION:
+	This function returns the cost of a path that starts on vertex zero, follows the
+	permutation path until the last vertex of the list_nodes_visited, goes to a vertex in the list_nodes_to_be_visited,
+	does a q-route including only vertices of list_nodes_to_be_visited, and goes back
+	to vertex number zero.
+
+	This function returns the size of the smallest of those paths.
+
+	Let N be the size of the list list_nodes_to_be_visited.
+	The cost of going from vertex zero to the last vertex of the permutation is cost_so_far.
+	For the rest of the costs, we may calculate the q route among the list_nodes_visited initializing
+	the cost of the q route with zero edges starting on each vertex v as being the cost of the edge
+	that connects v to the vertex 0, instead of the usual flat zero.
+	Then, we calculate the q route with (N-1) vertices among list_nodes_to_be_visited.
+	In the end, we do one more iteration to calculate q-routes starting on the last vertex
+	of the partial permutation to the vertices in list_nodes_to_be_visited.
+PARAMETERS:
+	list_nodes_visited
+		The list of visited vertices so far in that partial permutation
+	list_nodes_to_be_visited
+		The list of vertices that have not been visited yet in that partial permutation
+	cost_so_far
+		The cost so far of the edges that connect the vertices in that partial permutation
+RETURNS
+	an integer
+		The size of the smallest of the paths described in the description
+GLOBAL VARIABLES USED:
+	TO READ:
+		NUM_VERTICES
+		EDGE_WEIGHT
+'''
+def qRouteLowerBound(list_nodes_visited, list_nodes_to_be_visited, cost_so_far):
+
+	num_vertices_to_be_visited = len(list_nodes_to_be_visited)
+	q_values_route_n_edges = []
+	q_values_route_n_minus_1_edges = []
+	vertices_in_table = []
+	last_vertex_in_permutation = list_nodes_visited[-1]
+
+	if num_vertices_to_be_visited == 0:
+		return cost_so_far + EDGE_WEIGHT[last_vertex_in_permutation][0]
+	# END IF
+
+	for i in xrange(num_vertices_to_be_visited):
+		vertex = list_nodes_to_be_visited[i]
+		vertices_in_table.append(vertex)
+		q_values_route_n_edges.append( EDGE_WEIGHT[vertex][0] );
+	# END FOR
+
+	for k in xrange(num_vertices_to_be_visited - 1):
+
+		q_values_route_n_minus_1_edges = list(q_values_route_n_edges)
+
+		for i in xrange(num_vertices_to_be_visited):
+			source_vertex = vertices_in_table[i]
+			q_values_route_n_edges[i] = float("inf")
+			for j in xrange(num_vertices_to_be_visited):
+				child_vertex = vertices_in_table[j]
+				q_values_route_n_edges[i] = min(q_values_route_n_edges[i], EDGE_WEIGHT[source_vertex][child_vertex] + q_values_route_n_minus_1_edges[j])
+			# END FOR
+		# END FOR
+
+	# END FOR
+
+	smallest_q_route = float("inf")
+	for i in xrange(num_vertices_to_be_visited):
+		vertex = vertices_in_table[i]
+		smallest_q_route = min( smallest_q_route, EDGE_WEIGHT[last_vertex_in_permutation][vertex] + q_values_route_n_edges[i] )
+
+	lower_bound = smallest_q_route + cost_so_far
 
 	return lower_bound
 
@@ -310,6 +386,8 @@ def bruteForceWithPrunning( list_nodes_visited,
 			list_nodes_to_be_visited.append(child_node) 	# push back
 			list_nodes_visited.pop() 						# pop back
 
+	return
+
 '''
 FUNCTION
 	initBruteForceWithPrunning
@@ -391,6 +469,14 @@ def main():
 	initBruteForceWithPrunning(sumMinEdgesBound)
 	print("--------")
 	print "LOWER BOUND USED: Sum Min Edges"
+	print "Lowest Cost = " + str(min_cost_so_far)
+	print "Correspondent Permutation = " + str(min_path_so_far)
+	print "Number of Leaves Visited = " + str(num_leaves_visited_so_far)
+	print "Percentage of Permutations prunned = " + str((1.0 - float(num_leaves_visited_so_far)/float(number_of_possible_permutations))*100.0) + "%"
+
+	initBruteForceWithPrunning(qRouteLowerBound)
+	print("--------")
+	print "LOWER BOUND USED: Q Route"
 	print "Lowest Cost = " + str(min_cost_so_far)
 	print "Correspondent Permutation = " + str(min_path_so_far)
 	print "Number of Leaves Visited = " + str(num_leaves_visited_so_far)
