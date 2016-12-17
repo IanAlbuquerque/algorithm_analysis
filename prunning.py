@@ -326,6 +326,9 @@ def bruteForceWithPrunning( list_nodes_visited,
 
 	time_elapsed_in_seconds = time.time() - start_time_in_seconds
 	if(time_elapsed_in_seconds > TIME_TO_RUN_ALGORITHM_IN_SECONDS):
+		file_out = open(PATH_OUTPUT_FILE,"a")
+		file_out.write("Timeout: 1 hour executing\n")
+		file_out.close()
 		sys.exit();
 
 	# The current node being "investigated" is the last node that has been visited
@@ -558,6 +561,12 @@ def initBruteForceWithPrunning(cities, costMatrix, lowerBoundFunction, output_fi
 								list_nodes_to_be_visited,
 								cost_initial_partial_permutation,
 								lowerBoundFunction);
+
+	time_elapsed_in_seconds = time.time() - start_time_in_seconds
+
+	file_out = open(PATH_OUTPUT_FILE,"a")
+	file_out.write("Search end in " + str(time_elapsed_in_seconds) + "s\n")
+	file_out.close()
 
 
 def reportNumberPermutations():
