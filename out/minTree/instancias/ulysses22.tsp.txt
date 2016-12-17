@@ -2,36 +2,36 @@ BEST PERMUTATIONS FOUND SO FAR
 -----------
 Permutation = [0, 7, 17, 3, 21, 16, 1, 2, 11, 12, 13, 14, 4, 5, 6, 18, 19, 9, 20, 8, 10, 15]
 Cost = 83
-Time Elapsed (seconds) = 0.00999999046326
+Time Elapsed (seconds) = 0.0179998874664
 -----------
 Permutation = [0, 7, 17, 3, 21, 16, 1, 2, 11, 12, 13, 14, 4, 5, 6, 18, 19, 9, 8, 10, 20, 15]
 Cost = 81
-Time Elapsed (seconds) = 0.0909998416901
+Time Elapsed (seconds) = 0.175999879837
 -----------
 Permutation = [0, 7, 17, 3, 21, 16, 1, 2, 11, 12, 13, 14, 4, 5, 6, 18, 9, 8, 10, 19, 20, 15]
 Cost = 80
-Time Elapsed (seconds) = 0.168999910355
+Time Elapsed (seconds) = 0.332000017166
 -----------
 Permutation = [0, 7, 17, 3, 21, 16, 1, 2, 11, 12, 13, 14, 4, 5, 6, 18, 10, 8, 9, 19, 20, 15]
 Cost = 79
-Time Elapsed (seconds) = 0.246000051498
+Time Elapsed (seconds) = 0.487999916077
 -----------
 Permutation = [0, 7, 17, 3, 21, 16, 1, 2, 11, 12, 13, 14, 4, 5, 6, 10, 8, 9, 19, 20, 18, 15]
 Cost = 78
-Time Elapsed (seconds) = 0.326999902725
+Time Elapsed (seconds) = 0.677000045776
 -----------
 Permutation = [0, 7, 17, 3, 21, 16, 1, 2, 11, 12, 13, 14, 4, 5, 6, 10, 8, 9, 18, 19, 20, 15]
 Cost = 77
-Time Elapsed (seconds) = 0.404000043869
+Time Elapsed (seconds) = 0.826999902725
 -----------
 Permutation = [0, 7, 17, 3, 21, 16, 1, 2, 11, 12, 13, 14, 4, 10, 8, 9, 19, 20, 18, 5, 6, 15]
 Cost = 76
-Time Elapsed (seconds) = 0.615000009537
+Time Elapsed (seconds) = 1.22900009155
 -----------
 Permutation = [0, 7, 17, 3, 21, 16, 1, 2, 11, 12, 13, 14, 4, 10, 8, 9, 18, 5, 6, 19, 20, 15]
 Cost = 75
-Time Elapsed (seconds) = 0.691999912262
+Time Elapsed (seconds) = 1.36199998856
 -----------
 Permutation = [0, 7, 17, 3, 21, 16, 1, 2, 11, 12, 13, 14, 4, 10, 8, 5, 6, 18, 9, 19, 20, 15]
 Cost = 74
-Time Elapsed (seconds) = 0.771999835968
+Time Elapsed (seconds) = 1.507999897

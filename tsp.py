@@ -47,6 +47,7 @@ def printMatrix(matrix):
 def main():
     if len(sys.argv) != 3:
         print("!Uso: tsp.py {filepath} {numero algoritmo}")
+        print("1 -> forca bruta\n3-> Q-route\n4->minimum spanning tree")
         return
     
     script, filename, algorithm = sys.argv
