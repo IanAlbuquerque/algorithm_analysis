@@ -352,7 +352,6 @@ def bruteForceWithPrunning( list_nodes_visited,
 			file_out.write("Cost = " + str(min_cost_so_far) + "\n")
 			file_out.close()
 
-
 			min_x = min(CITIES, key = lambda t: t[1])[1]
 			min_y = min(CITIES, key = lambda t: t[2])[2]
 			max_x = max(CITIES, key = lambda t: t[1])[1]
