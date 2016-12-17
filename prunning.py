@@ -1,5 +1,8 @@
 import math
 
+import time
+import sys
+
 import numpy
 import skimage.io
 import skimage.draw
@@ -8,6 +11,9 @@ import skimage.draw
 CONSTANTS / INPUT OF THE PROBLEM
 =============================================================================
 '''
+
+TIME_TO_RUN_ALGORITHM_IN_SECONDS = 60
+
 '''
 CONSTANT
 	PATH_OUTPUT_FILE
@@ -49,6 +55,8 @@ EDGE_WEIGHT = [	[0,		1,			10,			100,			1000 		],
 GLOBAL VARIABLES USED BY THE ALGORITHM
 =============================================================================
 '''
+
+start_time_in_seconds = 0
 
 '''
 VARIABLE
@@ -316,6 +324,10 @@ def bruteForceWithPrunning( list_nodes_visited,
 	global num_leaves_visited_so_far
 	global COUNT
 
+	time_elapsed_in_seconds = time.time() - start_time_in_seconds
+	if(time_elapsed_in_seconds > TIME_TO_RUN_ALGORITHM_IN_SECONDS):
+		sys.exit();
+
 	# The current node being "investigated" is the last node that has been visited
 	current_node = list_nodes_visited[-1]
 
@@ -323,6 +335,7 @@ def bruteForceWithPrunning( list_nodes_visited,
 	if COUNT > MAX_COUNT:
 		print list_nodes_visited
 		print "Upper Bound = " + str(min_cost_so_far)
+		print "Time Elapsed (Seconds) =" + str(time_elapsed_in_seconds)
 		COUNT = 0
 
 	# -----------------------
@@ -350,6 +363,7 @@ def bruteForceWithPrunning( list_nodes_visited,
 			file_out.write("-----------\n")
 			file_out.write("Permutation = " + str(min_path_so_far) + "\n")
 			file_out.write("Cost = " + str(min_cost_so_far) + "\n")
+			file_out.write("Time Elapsed (seconds) = " + str(time_elapsed_in_seconds) + "\n")
 			file_out.close()
 
 			min_x = min(CITIES, key = lambda t: t[1])[1]
@@ -508,6 +522,9 @@ def initBruteForceWithPrunning(cities, costMatrix, lowerBoundFunction, output_fi
 	global NUM_VERTICES
 	global PATH_OUTPUT_FILE
 	global CITIES
+	global start_time_in_seconds
+
+	start_time_in_seconds = time.time()
 
 	CITIES = cities
 	PATH_OUTPUT_FILE = output_file
