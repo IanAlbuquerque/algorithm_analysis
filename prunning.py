@@ -12,7 +12,7 @@ CONSTANTS / INPUT OF THE PROBLEM
 =============================================================================
 '''
 
-TIME_TO_RUN_ALGORITHM_IN_SECONDS = 60
+TIME_TO_RUN_ALGORITHM_IN_SECONDS = 3600
 
 '''
 CONSTANT
