@@ -231,40 +231,39 @@ GLOBAL VARIABLES USED:
 def qRouteLowerBound(list_nodes_visited, list_nodes_to_be_visited, cost_so_far):
 
 	num_vertices_to_be_visited = len(list_nodes_to_be_visited)
-	q_values_route_n_edges = []
-	q_values_route_n_minus_1_edges = []
-	vertices_in_table = []
+	q_values_A = []
+	q_values_B = []
+	using_list = 'A'
+	q_values_route_n_edges = q_values_A
+	q_values_route_n_minus_1_edges = q_values_B
 	last_vertex_in_permutation = list_nodes_visited[-1]
 
 	if num_vertices_to_be_visited == 0:
 		return cost_so_far + EDGE_WEIGHT[last_vertex_in_permutation][0]
 	# END IF
 
-	for i in xrange(num_vertices_to_be_visited):
-		vertex = list_nodes_to_be_visited[i]
-		vertices_in_table.append(vertex)
+	for vertex in list_nodes_to_be_visited:
 		q_values_route_n_edges.append( EDGE_WEIGHT[vertex][0] );
+		q_values_route_n_minus_1_edges.append( EDGE_WEIGHT[vertex][0] );
 	# END FOR
 
 	for k in xrange(num_vertices_to_be_visited - 1):
 
-		q_values_route_n_minus_1_edges = list(q_values_route_n_edges)
+		if(using_list == 'A'):
+			q_values_route_n_minus_1_edges = q_values_A
+			q_values_route_n_edges = q_values_B
+			using_list = 'B'
+		else:
+			q_values_route_n_minus_1_edges = q_values_B
+			q_values_route_n_edges = q_values_A
+			using_list = 'A'
 
-		for i in xrange(num_vertices_to_be_visited):
-			source_vertex = vertices_in_table[i]
-			q_values_route_n_edges[i] = float("inf")
-			for j in xrange(num_vertices_to_be_visited):
-				child_vertex = vertices_in_table[j]
-				q_values_route_n_edges[i] = min(q_values_route_n_edges[i], EDGE_WEIGHT[source_vertex][child_vertex] + q_values_route_n_minus_1_edges[j])
-			# END FOR
-		# END FOR
-
+		for source_vertex,q_value in zip(list_nodes_to_be_visited,q_values_route_n_edges):
+			q_value = min( [EDGE_WEIGHT[source_vertex][a]+b for (a,b) in zip(list_nodes_to_be_visited,q_values_route_n_minus_1_edges)])
+		#END FOR
 	# END FOR
 
-	smallest_q_route = float("inf")
-	for i in xrange(num_vertices_to_be_visited):
-		vertex = vertices_in_table[i]
-		smallest_q_route = min( smallest_q_route, EDGE_WEIGHT[last_vertex_in_permutation][vertex] + q_values_route_n_edges[i] )
+	smallest_q_route = min( [EDGE_WEIGHT[last_vertex_in_permutation][a]+b for (a,b) in zip(list_nodes_to_be_visited,q_values_route_n_edges)] )
 
 	lower_bound = smallest_q_route + cost_so_far
 
@@ -527,6 +526,7 @@ def initBruteForceWithPrunning(cities, costMatrix, lowerBoundFunction, output_fi
 	global CITIES
 	global start_time_in_seconds
 
+	print("Algorithm started...")
 	start_time_in_seconds = time.time()
 
 	CITIES = cities

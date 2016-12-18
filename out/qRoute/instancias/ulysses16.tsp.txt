@@ -2,12 +2,17 @@ BEST PERMUTATIONS FOUND SO FAR
 -----------
 Permutation = [0, 7, 3, 1, 2, 11, 12, 13, 6, 5, 14, 9, 8, 4, 10, 15]
 Cost = 86
+Time Elapsed (seconds) = 0.0260000228882
 -----------
 Permutation = [0, 7, 3, 1, 2, 11, 12, 13, 6, 5, 14, 9, 8, 10, 4, 15]
 Cost = 79
+Time Elapsed (seconds) = 0.109999895096
 -----------
 Permutation = [0, 7, 3, 1, 2, 11, 12, 13, 6, 5, 14, 4, 10, 8, 9, 15]
 Cost = 73
+Time Elapsed (seconds) = 0.190999984741
 -----------
 Permutation = [0, 7, 3, 1, 2, 15, 12, 11, 6, 5, 9, 8, 10, 4, 14, 13]
 Cost = 72
+Time Elapsed (seconds) = 30.3929998875
+Timeout: 1 hour executing
