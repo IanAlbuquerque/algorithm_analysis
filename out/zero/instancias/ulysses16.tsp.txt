@@ -1,0 +1,102 @@
+BEST PERMUTATIONS FOUND SO FAR
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+Cost = 103
+Time Elapsed (seconds) = 0.0
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 11, 12, 15]
+Cost = 102
+Time Elapsed (seconds) = 0.43799996376
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 13, 11, 12, 15]
+Cost = 100
+Time Elapsed (seconds) = 0.56500005722
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 14, 13, 9, 11, 12, 15]
+Cost = 98
+Time Elapsed (seconds) = 0.684000015259
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 9, 11, 12, 13, 14, 15]
+Cost = 97
+Time Elapsed (seconds) = 0.796999931335
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 8, 13, 14, 11, 12, 15]
+Cost = 96
+Time Elapsed (seconds) = 0.938999891281
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 8, 14, 13, 11, 12, 15]
+Cost = 95
+Time Elapsed (seconds) = 1.04200005531
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 7, 9, 8, 10, 13, 14, 11, 12, 15]
+Cost = 94
+Time Elapsed (seconds) = 1.17499995232
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 7, 9, 8, 10, 14, 13, 11, 12, 15]
+Cost = 92
+Time Elapsed (seconds) = 1.31599998474
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 7, 13, 14, 10, 8, 9, 11, 12, 15]
+Cost = 91
+Time Elapsed (seconds) = 1.56200003624
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 7, 15]
+Cost = 90
+Time Elapsed (seconds) = 1.82500004768
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 14, 13, 11, 12, 15, 7]
+Cost = 88
+Time Elapsed (seconds) = 1.94599986076
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 8, 10, 14, 13, 9, 11, 12, 15, 7]
+Cost = 86
+Time Elapsed (seconds) = 2.17499995232
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 8, 10, 9, 11, 12, 13, 14, 15, 7]
+Cost = 85
+Time Elapsed (seconds) = 2.34699988365
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 8, 10, 9, 11, 12, 13, 14, 7, 15]
+Cost = 84
+Time Elapsed (seconds) = 2.48900008202
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 6, 9, 8, 10, 14, 13, 11, 12, 15, 7]
+Cost = 82
+Time Elapsed (seconds) = 3.43099999428
+-----------
+Permutation = [0, 1, 2, 3, 4, 5, 10, 8, 9, 6, 14, 13, 11, 12, 15, 7]
+Cost = 81
+Time Elapsed (seconds) = 22.7139999866
+-----------
+Permutation = [0, 1, 2, 3, 4, 10, 8, 9, 11, 12, 13, 14, 5, 6, 7, 15]
+Cost = 80
+Time Elapsed (seconds) = 298.897000074
+-----------
+Permutation = [0, 1, 2, 3, 4, 10, 8, 9, 11, 12, 13, 6, 5, 14, 7, 15]
+Cost = 79
+Time Elapsed (seconds) = 299.042999983
+-----------
+Permutation = [0, 1, 2, 3, 4, 10, 8, 9, 5, 6, 14, 13, 11, 12, 15, 7]
+Cost = 78
+Time Elapsed (seconds) = 299.60800004
+-----------
+Permutation = [0, 1, 2, 3, 4, 10, 8, 9, 6, 5, 14, 13, 11, 12, 15, 7]
+Cost = 77
+Time Elapsed (seconds) = 299.907000065
+-----------
+Permutation = [0, 1, 2, 3, 5, 6, 9, 8, 10, 4, 14, 13, 11, 12, 15, 7]
+Cost = 76
+Time Elapsed (seconds) = 610.256000042
+-----------
+Permutation = [0, 1, 2, 3, 7, 9, 6, 5, 8, 10, 4, 14, 13, 11, 12, 15]
+Cost = 75
+Time Elapsed (seconds) = 1906.47399998
+-----------
+Permutation = [0, 1, 2, 3, 7, 9, 8, 10, 4, 5, 6, 14, 13, 11, 12, 15]
+Cost = 74
+Time Elapsed (seconds) = 1907.77600002
+-----------
+Permutation = [0, 1, 2, 3, 7, 13, 14, 4, 10, 8, 9, 5, 6, 11, 12, 15]
+Cost = 73
+Time Elapsed (seconds) = 2073.68700004
+Timeout: 1 hour executing
